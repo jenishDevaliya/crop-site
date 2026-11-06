@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+<title>{% block title %} Predictions {% endblock %}</title>
+
+{% block content %}
+<div class="text-center">
+    <h3 class="mb-3">
+        <i class="fa-solid fa-seedling"></i> Prediction History
+    </h3>
+
+    <form method="get" class="card card-body shadow-sm border-0 mb-3">
+        <div class="row g-2">
+            <div class="col-md-4">
+                <label class="form-label">Crop</label>
+                <select name="crop" class="form-select">
+                    <option value="">All</option>
+                    {% for c in crops %}
+                    <option value="{{c}}" {% if current_crop == c %}selected{% endif %}>
+                        {{c|title}}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Start Date</label>
+                <input type="date" name="start" value="{{ start }}" class="form-control">
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">End Date</label>
+                <input type="date" name="end" value="{{ end }}" class="form-control">
+            </div>
+
+            <div class="col-md-2 d-flex align-items-end gap-2">
+                <button class="btn btn-success w-100" type="submit">
+                    <i class="fa-solid fa-filter"></i> Apply
+                </button>
+                <button type="reset" class="btn btn-outline-secondary w-100">
+                    <i class="fa-solid fa-rotate-left"></i> Clear
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead class="table-success">
+            <tr>
+                <th>Prediction Date</th>
+                <th>User</th>
+                <th>Crop</th>
+                <th>N</th>
+                <th>P</th>
+                <th>K</th>
+                <th>Temp</th>
+                <th>Humidity</th>
+                <th>pH</th>
+                <th>Rainfall</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for p in qs %}
+            <tr>
+                <td>{{ p.created_at|date:"d M Y H:i" }}</td>
+                <td>{{ p.user.username }}</td>
+                <td><span class="badge bg-success">{{ p.Predicted_label|title }}</span></td>
+                <td>{{ p.N }}</td>
+                <td>{{ p.P }}</td>
+                <td>{{ p.K }}</td>
+                <td>{{ p.temperature }}</td>
+                <td>{{ p.humidity }}</td>
+                <td>{{ p.ph }}</td>
+                <td>{{ p.rainfall }}</td>
+
+                <td>
+                    <a href="{% url 'admin_delete_prediction' p.id %}"
+                       class="btn btn-outline-danger btn-sm"
+                       onclick="return confirm('Delete this entry? This cannot be undone');">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="11" class="text-center text-muted">
+                    No prediction history found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

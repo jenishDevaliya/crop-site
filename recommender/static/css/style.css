@@ -1,0 +1,35 @@
+.hero-gredient {
+    background: linear-gradient(135deg,#2e7d32,#66bb6a)
+}
+
+.stat-tile {
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 1rem;
+    padding: .8rem 1rem;
+    color: #fff;
+}
+
+.state-tile {
+    font-size:1.6rem;
+    font-weight:700;
+    line-height:1;
+}
+/* Icon badge before section headeres */
+.icon-badge{
+    width: 44px; height: 44px; border-radius: 12px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(46,125,50,.1); color: #2e7d32;
+}
+.step .step-num{
+    width: 36px; height: 36px; border-radius: 50%;
+    background: #e8f5e9; color: #2e7d32; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; margin-bottom: .6rem;
+}
+.footer-gradient{
+    background: linear-gradient(135deg,#0b8b44,#0a6e35);
+}
+/*Button/cards global tweak (already may exists)*/
+.card { border-radius: 1rem; }
+.btn { border-radius: .8rem; }
+

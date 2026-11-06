@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+<title>{% block title %}Predict{% endblock %}</title>
+
+{% block content %}
+<div class="text-center">
+    <h3><i class="fa-solid fa-clock-rotate-left"></i> Prediction History</h3>
+
+    <table class="table">
+        <thead class="table-success">
+            <tr>
+                <th>Prediction Date</th>
+                <th>Crop</th>
+                <th>N</th>
+                <th>P</th>
+                <th>K</th>
+                <th>Temp</th>
+                <th>Humidity</th>
+                <th>pH</th>
+                <th>Rainfall</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for p in predictions %}
+            <tr>
+                <td>{{ p.created_at|date:"d M Y H:i" }}</td>
+                <td><span class="badge bg-success">{{ p.Predicted_label|title }}</span></td>
+                <td>{{ p.N }}</td>
+                <td>{{ p.P }}</td>
+                <td>{{ p.K }}</td>
+                <td>{{ p.temperature }}</td>
+                <td>{{ p.humidity }}</td>
+                <td>{{ p.ph }}</td>
+                <td>{{ p.rainfall }}</td>
+
+                <td>
+                    <a href="{% url 'user_delete_prediction' p.id %}"
+                       class="btn btn-outline-danger btn-sm"
+                       onclick="return confirm('Delete this entry? This cannot be undone');">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="10" class="text-center text-muted">
+                    No prediction history found.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
